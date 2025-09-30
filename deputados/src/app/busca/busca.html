@@ -1,0 +1,25 @@
+
+<div>
+  <h2>Buscar Deputado por Nome</h2>
+
+  <form [formGroup]="deputadoForm" (ngSubmit)="buscar()">
+    <input type="text" formControlName="nome" placeholder="Digite o nome do deputado">
+    <button type="submit" [disabled]="deputadoForm.invalid || carregando">Buscar</button>
+  </form>
+
+  <div *ngIf="deputadoForm.controls['nome'].invalid && deputadoForm.controls['nome'].touched" style="color:red;">
+    <small *ngIf="deputadoForm.controls['nome'].errors?.['required']">Campo obrigatório.</small>
+    <small *ngIf="deputadoForm.controls['nome'].errors?.['minlength']">Digite pelo menos 3 caracteres.</small>
+  </div>
+
+  <div *ngIf="carregando">Carregando...</div>
+  <div *ngIf="erro" style="color:red;">{{ mensagemErro }}</div>
+
+  <ul *ngIf="deputados?.length">
+    <li *ngFor="let d of deputados">
+      <strong>{{ d.nome }}</strong> - {{ d.siglaPartido }}/{{ d.siglaUf }}
+    </li>
+  </ul>
+
+ 
+</div>
